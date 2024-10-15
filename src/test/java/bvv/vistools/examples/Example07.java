@@ -49,7 +49,8 @@ public class Example07
 	 */
 	public static void main( final String[] args )
 	{
-		final ImagePlus imp = IJ.openImage( "https://imagej.nih.gov/ij/images/t1-head.zip" );
+		//final ImagePlus imp = IJ.openImage( "https://imagej.nih.gov/ij/images/t1-head.zip" );
+		final ImagePlus imp = IJ.openImage( "/home/eugene/Desktop/projects/BigTrace/BigTrace_data/t1-head.zip" );
 		final Img< UnsignedShortType > img = ImageJFunctions.wrapShort( imp );
 
 		final BvvSource source = BvvFunctions.show( img, "t1-head",
@@ -58,10 +59,17 @@ public class Example07
 		source.setColor( new ARGBType( 0xffff8800 ) );
 
 		final TexturedUnitCube cube = new TexturedUnitCube( "imglib2.png" );
+		final TexturedUnitCube cube2 = new TexturedUnitCube( "imglib2.png" );
+		cube.fOpacity = 0.75f;
 		final VolumeViewerPanel viewer = source.getBvvHandle().getViewerPanel();
-		viewer.setRenderScene( ( gl, data ) -> {
-			final Matrix4f cubetransform = new Matrix4f().translate( 140, 150, 65 ).scale( 80 );
+		viewer.setRenderSceneTransparent( ( gl, data ) -> {
+			final Matrix4f cubetransform = new Matrix4f().translate( 100, 150, 65 ).scale( 80 );
 			cube.draw( gl, new Matrix4f( data.getPv() ).mul( cubetransform ) );
+		} );
+		viewer.setRenderSceneOpaque( ( gl, data ) -> {
+			final Matrix4f cubetransform2 = new Matrix4f().translate( 170, 150, 65 ).scale( 80 );
+			cube2.draw( gl, new Matrix4f( data.getPv() ).mul( cubetransform2 ) );
+
 		} );
 
 		viewer.requestRepaint();

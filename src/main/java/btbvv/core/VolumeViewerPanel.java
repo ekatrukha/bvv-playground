@@ -108,23 +108,37 @@ import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
 import static com.jogamp.opengl.GL.GL_LESS;
 import static com.jogamp.opengl.GL.GL_RGB8;
 
+import com.jogamp.opengl.GL;
+
 public class VolumeViewerPanel
 		extends AbstractViewerPanel
 		implements OverlayRenderer, PainterThread.Paintable, ViewerStateChangeListener
 {
 	protected final CacheControl cacheControl;
 
-	public interface RenderScene
+	public interface RenderSceneOpaque
 	{
 		void render( final GL3 gl, RenderData data );
 	}
 
-	public void setRenderScene( final RenderScene renderScene )
+	public void setRenderSceneOpaque( final RenderSceneOpaque renderScene )
 	{
-		this.renderScene = renderScene;
+		this.renderSceneOpaque = renderScene;
 	}
 
-	private RenderScene renderScene;
+	private RenderSceneOpaque renderSceneOpaque;
+	
+	public interface RenderSceneTransparent
+	{
+		void render( final GL3 gl, RenderData data );
+	}
+
+	public void setRenderSceneTransparent( final RenderSceneTransparent renderScene )
+	{
+		this.renderSceneTransparent = renderScene;
+	}
+
+	private RenderSceneTransparent renderSceneTransparent;
 
 	private class Repaint
 	{
@@ -1043,8 +1057,14 @@ public class VolumeViewerPanel
 				sceneBuf.bind( gl );
 				gl.glEnable( GL_DEPTH_TEST );
 				gl.glDepthFunc( GL_LESS );
-				if ( renderScene != null )
-					renderScene.render( gl, renderData );
+				if ( renderSceneOpaque != null )
+					renderSceneOpaque.render( gl, renderData );
+				gl.glDepthMask(false);
+				gl.glEnable(GL.GL_BLEND);
+				gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA); 
+				if ( renderSceneTransparent != null )
+					renderSceneTransparent.render( gl, renderData );
+				gl.glDepthMask(true);
 				sceneBuf.unbind( gl, false );
 			}
 

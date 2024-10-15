@@ -70,13 +70,13 @@ public class ExampleBoxes
 
 		final TexturedUnitCube cube = new TexturedUnitCube( "imglib2.png" );
 		final VolumeViewerPanel viewer = source.getBvvHandle().getViewerPanel();
-		viewer.setRenderScene( ( gl, data ) -> {
+		viewer.setRenderSceneOpaque( ( gl, data ) -> {
 			final Matrix4f cubetransform = new Matrix4f().translate( 140, 150, 65 ).scale( 80 );
 			cube.draw( gl, new Matrix4f( data.getPv() ).mul( cubetransform ) );
 		} );
 
 		final CubeScene scene = new CubeScene( viewer );
-		viewer.setRenderScene( scene );
+		viewer.setRenderSceneOpaque( scene );
 		final Actions actions = new Actions( new InputTriggerConfig() );
 		actions.install( source.getBvvHandle().getKeybindings(), "additional" );
 		actions.runnableAction( scene::addRandomCube, "add random cube", "B" );
@@ -85,7 +85,7 @@ public class ExampleBoxes
 		viewer.requestRepaint();
 	}
 
-	static class CubeScene implements VolumeViewerPanel.RenderScene
+	static class CubeScene implements VolumeViewerPanel.RenderSceneOpaque
 	{
 		private final TexturedUnitCube[] cubes = new TexturedUnitCube[] {
 				new TexturedUnitCube( "imglib2.png" ),
