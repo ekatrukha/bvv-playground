@@ -40,5 +40,6 @@ float sampleVolume( vec4 wpos )
 		if(s.x * s.y * s.z==0.0)
 			return 0.0;
 	} 
+	pos = floor(pos);
 	return texture( volume, (pos+0.5) / textureSize( volume, 0 ) ).r;
 }

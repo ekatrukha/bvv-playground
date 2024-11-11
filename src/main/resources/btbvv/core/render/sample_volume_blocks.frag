@@ -48,6 +48,7 @@ float sampleVolume( vec4 wpos, sampler3D volumeCache, vec3 cacheSize, vec3 block
 		if(s.x * s.y * s.z==0.0)
 			return 0.0;
 	} 
+	
 	vec3 q = floor( pos / blockSize ) - lutOffset + 0.5;
 
 	uvec4 lutv = texture( lutSampler, q / lutSize );
