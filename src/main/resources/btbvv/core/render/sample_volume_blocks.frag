@@ -55,7 +55,7 @@ float sampleVolume( vec4 wpos, sampler3D volumeCache, vec3 cacheSize, vec3 block
 	vec3 B0 = lutv.xyz * paddedBlockSize + padOffset;
 	vec3 sj = blockScales[ lutv.w ];
 
-	vec3 c0 = B0 + mod( pos * sj, blockSize ) + 0.5 * sj;
+	vec3 c0 = B0 + mod( floor(pos * sj), blockSize ) + 0.5 * sj;
 	                                       // + 0.5 ( sj - 1 )   + 0.5 for tex coord offset
 	
 	return texture( volumeCache, c0 / cacheSize ).r;
