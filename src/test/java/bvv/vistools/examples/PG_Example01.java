@@ -34,7 +34,7 @@ import java.util.List;
 
 import bdv.spimdata.SpimDataMinimal;
 import bdv.spimdata.XmlIoSpimDataMinimal;
-
+import bvvpg.core.VolumeViewerPanel;
 import bvvpg.vistools.Bvv;
 import bvvpg.vistools.BvvFunctions;
 import bvvpg.vistools.BvvOptions;
@@ -48,6 +48,9 @@ import net.imglib2.img.Img;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 
 import net.imglib2.type.numeric.integer.UnsignedShortType;
+
+import org.janelia.saalfeldlab.control.mcu.MCUBVVControls;
+import org.janelia.saalfeldlab.control.mcu.XTouchMiniMCUControlPanel;
 
 
 public class PG_Example01 {
@@ -83,7 +86,25 @@ public class PG_Example01 {
 		double [] minI = spimData.getSequenceDescription().getImgLoader().getSetupImgLoader(0).getImage(0).minAsDoubleArray();
 		double [] maxI = spimData.getSequenceDescription().getImgLoader().getSetupImgLoader(0).getImage(0).maxAsDoubleArray();
 		*/
-	
+		VolumeViewerPanel dd = source.getBvvHandle().getViewerPanel();
+		/* create XTouchMini midi controller */
+		try {
+			final XTouchMiniMCUControlPanel controlPanel = XTouchMiniMCUControlPanel.build();
+			new MCUBVVControls(
+					source.getBvvHandle().getViewerPanel(),
+					controlPanel);
+
+//			((JFrame)SwingUtilities.getWindowAncestor(source.getBvvHandle().getViewerPanel()))
+//					.addWindowListener(new WindowAdapter() {
+//
+//						@Override
+//						public void windowClosing(final WindowEvent e) {
+//
+//							controlPanel.close();
+//						}
+//
+//					});
+		} catch (final Exception e) {}
 		source.setDisplayRangeBounds( 0, 40000 );
 		source.setDisplayRange(0, 655);
 		source.setDisplayGamma(0.5);
