@@ -173,9 +173,9 @@ public class BvvFunctions
 		final List< ConverterSetup > converterSetups = Collections.singletonList( BigDataViewer.createConverterSetup( soc, setupId ) );
 		final List< SourceAndConverter< T > > sources = Collections.singletonList( soc );
 		handle.add( converterSetups, sources, numTimepoints );
-		final BvvStackSource< T > bdvSource = new BvvStackSource<>( handle, numTimepoints, type, converterSetups, sources );
-		handle.addBvvSource( bdvSource );
-		return bdvSource;
+		final BvvStackSource< T > bvvSource = new BvvStackSource<>( handle, numTimepoints, type, converterSetups, sources );
+		handle.addBvvSource( bvvSource );
+		return bvvSource;
 	}
 	
 	public static List< BvvStackSource< ? > > show(
@@ -442,9 +442,9 @@ public class BvvFunctions
 		handle.add( setups, sources, numTimepoints );
 
 		final T type = source.getSpimSource().getType();
-		final BvvStackSource< T > bdvSource = new BvvStackSource<>( handle, numTimepoints, type, setups, sources );
-		handle.addBvvSource( bdvSource );
+		final BvvStackSource< T > bvvSource = new BvvStackSource<>( handle, numTimepoints, type, setups, sources );
+		handle.addBvvSource( bvvSource );
 
-		return bdvSource;
+		return bvvSource;
 	}
 }
