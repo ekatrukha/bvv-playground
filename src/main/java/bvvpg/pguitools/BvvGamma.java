@@ -98,7 +98,7 @@ public class BvvGamma {
 	 *            setupId of the created {@code ConverterSetup}
 	 * @return a new {@code ConverterSetup} or {@code null}
 	 */
-	public static ConverterSetup createConverterSetupBT( final SourceAndConverter< ? > soc, final int setupId )
+	public static ConverterSetup createConverterSetupPG( final SourceAndConverter< ? > soc, final int setupId )
 	{
 		final List< ColorConverter > converters = new ArrayList<>();
 
@@ -160,7 +160,7 @@ public class BvvGamma {
 		final SourceAndConverter< T > tsoc = bdv.BigDataViewer.wrapWithTransformedSource( soc );
 		sources.add( tsoc );
 
-		final ConverterSetup converterSetup = BvvGamma.createConverterSetupBT( tsoc, setupId );
+		final ConverterSetup converterSetup = BvvGamma.createConverterSetupPG( tsoc, setupId );
 		if ( converterSetup != null )
 			converterSetups.add( converterSetup );
 	}

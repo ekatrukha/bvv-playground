@@ -170,7 +170,7 @@ public class BvvFunctions
 		final BvvHandle handle = getHandle( options );
 		final T type = soc.getSpimSource().getType();
 		final int setupId = handle.getUnusedSetupId();
-		final List< ConverterSetup > converterSetups = Collections.singletonList( BvvGamma.createConverterSetupBT( soc, setupId ) );
+		final List< ConverterSetup > converterSetups = Collections.singletonList( BvvGamma.createConverterSetupPG( soc, setupId ) );
 		final List< SourceAndConverter< T > > sources = Collections.singletonList( soc );
 		handle.add( converterSetups, sources, numTimepoints );
 		final BvvStackSource< T > bvvSource = new BvvStackSource<>( handle, numTimepoints, type, converterSetups, sources );
@@ -427,7 +427,7 @@ public class BvvFunctions
 		final T type = source.getType();
 		final SourceAndConverter< T > soc = BigDataViewer.wrapWithTransformedSource(
 				new SourceAndConverter<>( source, BvvGamma.createConverterToARGB( type ) ) );
-		converterSetups.add( BvvGamma.createConverterSetupBT( soc, setupId ) );
+		converterSetups.add( BvvGamma.createConverterSetupPG( soc, setupId ) );
 		sources.add( soc );
 	}
 
@@ -436,7 +436,7 @@ public class BvvFunctions
 			final SourceAndConverter< T > source,
 			final int numTimepoints )
 	{
-		final ConverterSetup setup = BvvGamma.createConverterSetupBT( source, handle.getUnusedSetupId() );
+		final ConverterSetup setup = BvvGamma.createConverterSetupPG( source, handle.getUnusedSetupId() );
 		final List< ConverterSetup > setups = Collections.singletonList( setup );
 		final List< SourceAndConverter< T > > sources = Collections.singletonList( source );
 		handle.add( setups, sources, numTimepoints );
