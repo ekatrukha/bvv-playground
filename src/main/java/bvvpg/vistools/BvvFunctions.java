@@ -170,7 +170,7 @@ public class BvvFunctions
 		final BvvHandle handle = getHandle( options );
 		final T type = soc.getSpimSource().getType();
 		final int setupId = handle.getUnusedSetupId();
-		final List< ConverterSetup > converterSetups = Collections.singletonList( BigDataViewer.createConverterSetup( soc, setupId ) );
+		final List< ConverterSetup > converterSetups = Collections.singletonList( BvvGamma.createConverterSetupBT( soc, setupId ) );
 		final List< SourceAndConverter< T > > sources = Collections.singletonList( soc );
 		handle.add( converterSetups, sources, numTimepoints );
 		final BvvStackSource< T > bvvSource = new BvvStackSource<>( handle, numTimepoints, type, converterSetups, sources );
