@@ -101,7 +101,7 @@ public abstract class BvvSource implements Bvv
 		return bvv;
 	}
 
-	protected void setBdvHandle( final BvvHandle bdv )
+	public void setBdvHandle( final BvvHandle bdv )
 	{
 		this.bvv = bdv;
 	}

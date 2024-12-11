@@ -254,7 +254,7 @@ public abstract class BvvHandle implements Bvv
 			viewer.state().removeSources( sources );
 	}
 
-	void addBvvSource( final BvvSource bvvSource )
+	public void addBvvSource( final BvvSource bvvSource )
 	{
 		bvvSources.add( bvvSource );
 		updateHasPlaceHolderSources();

@@ -395,6 +395,25 @@ public class BvvFunctions
 		converterSetups.add( BvvGamma.createConverterSetupBT( soc, setupId ) );
 		sources.add( soc );
 	}
+	
+	public static < T > BvvStackSource< T > show(
+			final SourceAndConverter< T > soc,
+			final int numTimepoints,
+			final BvvOptions options )
+	{
+		final Bvv bvv = options.values.addTo();
+		final BvvHandle handle = ( bvv == null )
+				? new BvvHandleFrame( options )
+				: bvv.getBvvHandle();
+		final T type = soc.getSpimSource().getType();
+		final int setupId = handle.getUnusedSetupId();
+		final List< ConverterSetup > converterSetups = Collections.singletonList( BvvGamma.createConverterSetupBT( soc, setupId ) );
+		final List< SourceAndConverter< T > > sources = Collections.singletonList( soc );
+		handle.add( converterSetups, sources, numTimepoints );
+		final BvvStackSource< T > bdvSource = new BvvStackSource<>( handle, numTimepoints, type, converterSetups, sources );
+		handle.addBvvSource( bdvSource );
+		return bdvSource;
+	}
 
 	private static < T > BvvStackSource< T > addSpimDataSource(
 			final BvvHandle handle,
